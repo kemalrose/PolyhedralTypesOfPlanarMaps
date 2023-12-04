@@ -2,7 +2,6 @@
 
 #using Pkg
 #Pkg.add("Oscar")
-using Oscar
 using Oscar, LinearAlgebra, Random
 
 
@@ -834,7 +833,7 @@ end
 
 
 
-result_list = do_experiments(4);
+result_list = do_experiments(2);
 
 lst = copy(result_list);
 types = [res[2] for res in result_list];
