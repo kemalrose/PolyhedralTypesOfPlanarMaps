@@ -631,11 +631,11 @@ function get_Gamma(data1,data2,face_list,cpt_upper_faces::Bool)
         #return(convex_hull([γ1[2],γ1[1]]))
         #return
         l = abs(gcd(γ1[2]-γ1[1])) 
-        return convex_hull([[0,0],[l,0]])
+        return convex_hull([[0,0],[0,l]])
     elseif !([0;0] in γ2)
         l =  abs(gcd(γ2[2]-γ2[1])) 
         #return(convex_hull([γ2[2],γ2[1]]))
-        return convex_hull([[0,0],[0,l]])
+        return convex_hull([[0,0],[l,0]])
     end
 
     if data1.no_origin
