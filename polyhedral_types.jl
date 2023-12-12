@@ -155,8 +155,7 @@ end
 # -------------  Output:
 # Delta                a Polyhedron
 
-function get_delta(A1, A2)
-    verts1, verts2 = A1, A2
+function get_delta(verts1, verts2)
     data1 = get_auxillary_data(verts1)
     data2 = get_auxillary_data(verts2)
     Jac = newt_Jac(data1, data2)
@@ -841,19 +840,3 @@ function do_experiments(deg::Int)
     end
     result_list
 end
-
-deg = 2;
-result_list = do_experiments(deg)
-
-#lst = copy(result_list);
-types = [res[2] for res in result_list];
-#inds = sortperm(types);
-#sorted_res = lst[inds];
-appearing_types = unique(types);
-
-#unique([type[(end-4):end] for type in appearing_types])
-
-
-println("We consider the degree = $deg case.")
-println("There are ", length(result_list), " many conical pairs")
-println("These have ", length(appearing_types), " different topological types.")

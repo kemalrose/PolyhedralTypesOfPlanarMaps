@@ -1,4 +1,48 @@
 
+A1 = [0 2 4 2; 2 2 4 6];
+A2 = [1 2 5 3; 2 2 5 6];
+Delta = get_delta(A1, A2);
+psi = get_polyhedral_type(A1,A2);
+
+
+visualize(convex_hull([x[1:2] for x in vertices(newton_polytope(f2))]))
+verts1 = Int64.(hcat([x[1:2] for x in vertices(newton_polytope(f1))]...))
+verts2 = Int64.(hcat([x[1:2] for x in vertices(newton_polytope(f2))]...))
+
+
+(verts1, verts2) = [5 5 0; 1 0 0], [6 5 4; 0 0 2]
+@time Delta = get_delta(verts1, verts2)
+
+verts1 = []
+
+verts1 = []
+5  5  0
+1  0  0
+
+6  5  4
+0  0  2
+using Oscar, Primes
+
+
+
+for p in Primes.primes(200,400)
+  p = 251
+  FF,_ = FiniteField(p,1,"");
+  R,(z1,z2,y1,y2) = PolynomialRing(FF,["z1","z2","y1","y2"]);
+  f1 = 41*z1^5*z2 + 43*z1^5 + 47*z1^4 + 53*z1^3 +  59*z1^2 + 61*z1 + 67;
+  f2 = 71*z1^6 + 73*z1^5*z2 + 79*z1^5 + 83*z1^4*z2^2
+  + 89*z1*z2^5 + 97*z1*z2^2 + 101*z1*z2 + 103*z1+ 107;
+  Jac = det(jacobi_matrix([f1,f2])[1:2,:]);
+  Id = Oscar.ideal(R,[Jac, f1-y1, f2-y2]);
+  Discriminant = eliminate(Id,[z1,z2])[1];
+  D = convex_hull([vert[3:4] for vert in vertices(newton_polytope(Discriminant))])
+  v = volume(D)
+  println("For p = $p the volume is equal to $v")
+end
+
+
+
+
 
 for p in Primes.primes(1,300)
   FF,_ = FiniteField(p,1,"");
@@ -13,6 +57,9 @@ for p in Primes.primes(1,300)
   v = volume(D)
   println("For p = $p the volume is equal to $v")
 end
+
+
+
 
 
 A1, A2 = [5 5 0; 1 0 0], [6 1 0; 0 5 0];
@@ -182,3 +229,19 @@ end
 
 
 
+
+deg = 4;
+result_list = do_experiments(deg)
+
+#lst = copy(result_list);
+types = [res[2] for res in result_list];
+#inds = sortperm(types);
+#sorted_res = lst[inds];
+appearing_types = unique(types);
+
+#unique([type[(end-4):end] for type in appearing_types])
+
+
+println("We consider the degree = $deg case.")
+println("There are ", length(result_list), " many conical pairs")
+println("These have ", length(appearing_types), " different topological types.")
