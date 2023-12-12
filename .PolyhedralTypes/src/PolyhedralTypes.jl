@@ -1,5 +1,5 @@
 
-
+module PolyhedralTypes
 
 # Authors: Kemal Rose, Boulos es Hilany
 # Date: November 14, 2023
@@ -802,9 +802,28 @@ function polyhedral_type(data1::auxillary_data,data2::auxillary_data)
     psi11 = h0Gamma + h0Gammap + delGamma + delGammap
     psi12 = h0Gamma * h0Gammap + delGamma * delGammap
 
+
+    iota1 = mixed_vol(data1.pol0, data2.pol0)
+    iota2 = h0Sigma
+    iota3 = NSigma
+    iota4 = mc
+    iota5 = mh
+    iota6 = mv
+    iota7 = h0Delta - h0Sigma + delDelta
+    iota8 = mvol_Gamma_Gammap + NGamma_plus_Gammap - NGamma - NGammap
+    iota9 = h0Gamma  + NGamma 
+    iota10 =  h0Gammap + NGammap
+    iota11 = h0Gamma + delGamma 
+    iota12 = h0Gammap + delGammap
+
+
+
     psi = (psi1, psi2, psi3, psi4, psi5, psi6, psi7, psi8, psi9, psi10, psi11, psi12)
     psi = Int64.(numerator.(psi))
-    psi
+
+    iota = (iota1, iota2, iota3, iota4, iota5, iota6, iota7, iota8, iota9, iota10, iota11, iota12)
+    iota = Int64.(numerator.(iota))
+    iota
 end
 
 function number_of_interior_pts(pol)
@@ -839,4 +858,6 @@ function do_experiments(deg::Int)
         end
     end
     result_list
+end
+
 end
